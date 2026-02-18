@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TerminScan">
+<meta name="theme-color" content="#7c6fff">
+<title>TerminScan</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIACrAQAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAXJJREFUeJydkr9KA0EQxn8XzouERCKkFQQVRETsUtkJqfMMglhEuCJFLK66IimuODCVWOgTaBvwAYIImkYCkjeICppA/sCORTbnZZMU+i0fM7O73+zMsFYunUdDMHB20rS0uwIkASd2PAKGtohaKI7BFDta7AAkBCWCott7vBUUcS6AY1gSiOK993QLTKwoIs5jZFis9dThwvI/+s9H8dhzeWHBDKxs6mAmwWe/VdRu18iZ04kedDyMWpjys98qlmgEJRoBkPNcAs8lmIoB/JBjLR4D44Twu4ySK35I1w/pei4VoB07HgNcXu2LjTHtOoUy0PYmr1b0dhm40X7ND2lmU3t5gISIYkoDgedS81xqQBCrLAA4P33tiCiWtbDrh5Ew8ENqJRp5zyXnh1wD9wCCYGWS2zPKr8FbEQMlGnd1Chfm/trqTtU2f1xmdevOvPg96MyJJxUobHP6f4Egs/9gGdPJzSoQ2cgXhZVyNibJ/okfc7O4RBbsvlAAAAAASUVORK5CYII=">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap');
+:root{--bg:#0a0a0f;--s:#13131a;--s2:#1c1c27;--bd:#2a2a3d;--ac:#7c6fff;--tx:#e8e8f0;--mu:#666680;--ok:#6bffb8;--er:#ff6b6b;--wa:#ffcc6b;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--tx);font-family:'DM Mono',monospace;min-height:100dvh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(124,111,255,.03)1px,transparent 1px),linear-gradient(90deg,rgba(124,111,255,.03)1px,transparent 1px);
+  background-size:40px 40px;}
+
+/* Tabs */
+.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:var(--s);border-top:1px solid var(--bd);
+  display:flex;max-width:480px;margin:0 auto;padding-bottom:env(safe-area-inset-bottom,.4rem);}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px 6px;
+  cursor:pointer;font-size:.6rem;color:var(--mu);letter-spacing:.04em;text-transform:uppercase;
+  border:none;background:none;transition:color .2s;-webkit-tap-highlight-color:transparent;}
+.tab.active{color:var(--ac);}
+.tab-icon{font-size:1.3rem;line-height:1;}
+.tab-dot{width:4px;height:4px;border-radius:50%;background:var(--ac);opacity:0;transition:opacity .2s;}
+.tab.active .tab-dot{opacity:1;}
+
+/* Pages */
+.page{display:none;position:relative;z-index:1;max-width:480px;margin:0 auto;
+  padding:24px 20px;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 80px);
+  min-height:100dvh;}
+.page.active{display:block;animation:fadeUp .25s ease both;}
+
+/* Header */
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-top:8px;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-.03em;}
+.logo span{color:var(--ac);}
+.status-pill{font-size:.65rem;padding:4px 10px;border-radius:100px;border:1px solid var(--bd);
+  color:var(--mu);letter-spacing:.05em;text-transform:uppercase;transition:all .3s;white-space:nowrap;}
+.status-pill.on{border-color:var(--ok);color:var(--ok);background:rgba(107,255,184,.06);}
+.gear-btn{width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);
+  color:var(--mu);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;flex-shrink:0;}
+.gear-btn:active{color:var(--ac);border-color:var(--ac);background:rgba(124,111,255,.1);}
+
+/* Upload */
+.upload-zone{background:var(--s);border:1.5px dashed var(--bd);border-radius:20px;
+  padding:32px 20px;text-align:center;cursor:pointer;transition:all .3s;
+  position:relative;overflow:hidden;margin-bottom:12px;}
+.upload-zone.drag{border-color:var(--ac);background:rgba(124,111,255,.06);}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;font-size:0;}
+.upload-icon{width:56px;height:56px;margin:0 auto 14px;background:var(--s2);border-radius:16px;
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;}
+.upload-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:6px;}
+.upload-sub{font-size:.73rem;color:var(--mu);line-height:1.5;}
+.badges{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.badge{font-size:.65rem;padding:3px 9px;border-radius:100px;border:1px solid var(--bd);color:var(--mu);}
+.badge.free{border-color:rgba(107,255,184,.4);color:var(--ok);background:rgba(107,255,184,.06);}
+
+/* Buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;
+  border-radius:12px;border:none;font-family:'DM Mono',monospace;font-size:.8rem;
+  cursor:pointer;transition:all .2s;letter-spacing:.04em;text-decoration:none;}
+.btn-p{background:var(--ac);color:#fff;}
+.btn-p:active{opacity:.8;transform:scale(.98);}
+.btn-p:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.btn-g{background:var(--s2);color:var(--mu);border:1px solid var(--bd);}
+.btn-g:active{opacity:.7;}
+.btn-g:disabled{opacity:.35;cursor:not-allowed;}
+.btn-ok{background:rgba(107,255,184,.1);color:var(--ok);border:1px solid var(--ok);}
+.btn-ok:disabled{opacity:.35;cursor:not-allowed;}
+.row{display:flex;gap:10px;}
+
+/* Preview */
+.preview-section{display:none;margin-bottom:16px;}
+.preview-section.on{display:block;}
+.preview-img{width:100%;max-height:280px;object-fit:contain;border-radius:14px;border:1px solid var(--bd);background:var(--s2);}
+.pdf-box{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:24px;text-align:center;}
+
+/* Progress */
+.prog{display:none;background:var(--s);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px;}
+.prog.on{display:block;}
+.step{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd);font-size:.78rem;color:var(--mu);transition:color .3s;}
+.step:last-child{border-bottom:none;}
+.step.active{color:var(--tx);}
+.step.done{color:var(--ok);}
+.si{width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;transition:all .3s;}
+.step.active .si{border-color:var(--ac);background:rgba(124,111,255,.1);animation:pulse 1.2s infinite;}
+.step.done .si{background:rgba(107,255,184,.1);border-color:var(--ok);}
+
+/* Alert */
+.alert{display:none;border-radius:12px;padding:13px 15px;font-size:.77rem;line-height:1.5;margin-bottom:14px;}
+.alert.on{display:block;}
+.alert.ok{background:rgba(107,255,184,.08);border:1px solid var(--ok);color:var(--ok);}
+.alert.er{background:rgba(255,107,107,.08);border:1px solid var(--er);color:var(--er);}
+.alert a{color:inherit;}
+
+/* Result */
+.result{display:none;background:var(--s);border:1px solid var(--bd);border-radius:20px;padding:22px;margin-bottom:16px;}
+.result.on{display:block;animation:fadeUp .25s ease both;}
+.rtitle{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.conf-badge{font-size:.65rem;padding:3px 10px;border-radius:100px;}
+.rfield{display:flex;gap:12px;margin-bottom:10px;padding:12px;background:var(--s2);border-radius:10px;border:1px solid var(--bd);align-items:flex-start;}
+.rfi{font-size:1rem;flex-shrink:0;padding-top:1px;}
+.rfl{font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin-bottom:3px;}
+.rfv{font-size:.83rem;color:var(--tx);outline:none;min-width:10px;word-break:break-word;border-radius:4px;}
+.rfv:focus{outline:1px dashed var(--ac);padding:1px 4px;margin:-1px -4px;}
+.hint{font-size:.65rem;color:var(--mu);text-align:center;margin:8px 0 14px;}
+.raw-tog{font-size:.65rem;color:var(--mu);cursor:pointer;display:flex;align-items:center;gap:6px;margin-bottom:8px;user-select:none;padding:4px 0;}
+.coll{overflow:hidden;max-height:0;transition:max-height .35s ease;}
+.coll.on{max-height:300px;}
+.raw-tx{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:10px;font-size:.7rem;
+  color:var(--mu);line-height:1.6;max-height:160px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;margin-bottom:14px;}
+.dupe{display:none;background:rgba(255,204,107,.08);border:1px solid var(--wa);border-radius:12px;
+  padding:14px;margin-bottom:12px;font-size:.77rem;line-height:1.5;color:var(--wa);}
+
+/* Settings Modal */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:200;}
+.overlay.on{display:block;}
+.modal{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.92);
+  width:min(92vw,440px);background:var(--s);border:1px solid var(--bd);
+  border-radius:22px;padding:24px;z-index:201;opacity:0;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),opacity .18s ease;
+  max-height:90dvh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.7);}
+.modal.on{display:block;}
+.modal.open{transform:translate(-50%,-50%) scale(1);opacity:1;}
+.mhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.mtitle{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+.mclose{width:32px;height:32px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);
+  color:var(--mu);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;}
+.mclose:active{background:var(--bd);color:var(--tx);}
+.msep{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ac);
+  margin:18px 0 10px;display:flex;align-items:center;gap:8px;}
+.msep::after{content:'';flex:1;height:1px;background:var(--bd);}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:.7rem;color:var(--mu);margin-bottom:5px;line-height:1.4;}
+.field label a{color:var(--ac);text-decoration:none;}
+.pw-wrap{position:relative;}
+.pw-wrap input{padding-right:40px !important;}
+.field input{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:10px;
+  padding:11px 14px;color:var(--tx);font-family:'DM Mono',monospace;font-size:.8rem;
+  outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.field input:focus{border-color:var(--ac);}
+.field input::placeholder{color:var(--mu);font-size:.75rem;}
+.eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:.85rem;color:var(--mu);padding:6px;}
+.key-status{font-size:.68rem;margin-top:5px;}
+.key-status.ok{color:var(--ok);}
+.key-status.er{color:var(--er);}
+
+/* Guide */
+.guide-step{background:var(--s);border:1px solid var(--bd);border-radius:16px;padding:18px;margin-bottom:14px;}
+.gs-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+  border-radius:50%;background:var(--ac);color:#fff;font-size:.75rem;font-weight:700;margin-bottom:10px;flex-shrink:0;}
+.gs-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:10px;}
+.gs-text{font-size:.75rem;color:var(--mu);line-height:1.85;}
+.gs-text strong{color:var(--tx);}
+.gs-text code{background:var(--s2);padding:1px 6px;border-radius:4px;font-size:.72rem;color:var(--ac);}
+.gs-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:10px 16px;
+  background:rgba(124,111,255,.1);border:1px solid var(--ac);border-radius:10px;
+  color:var(--ac);font-size:.75rem;text-decoration:none;transition:all .2s;}
+.gs-link:active{background:rgba(124,111,255,.2);}
+.note-box{background:rgba(107,255,184,.06);border:1px solid var(--ok);border-radius:12px;
+  padding:14px;margin-bottom:16px;font-size:.75rem;color:var(--ok);line-height:1.7;}
+.note-box strong{color:#fff;}
+.warn-box{background:rgba(255,204,107,.06);border:1px solid var(--wa);border-radius:12px;
+  padding:14px;margin-bottom:16px;font-size:.75rem;color:var(--wa);line-height:1.7;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,111,255,.4);}50%{box-shadow:0 0 0 7px rgba(124,111,255,0);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{display:inline-block;animation:spin .9s linear infinite;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:10px;}
+</style>
+</head>
+<body>
+
+<!-- PAGE: SCANNER -->
+<div class="page active" id="page-scan">
+  <header>
+    <div class="logo">Termin<span>.</span>Scan</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="status-pill" id="authStatus">offline</div>
+      <button class="gear-btn" onclick="openSettings()" title="Einstellungen">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="upload-zone" id="uploadZone">
+    <input type="file" accept="image/*,image/jpeg,image/png,image/webp,application/pdf" id="fileInput" onchange="handleFile(event)">
+    <div class="upload-icon">📂</div>
+    <div class="upload-title">Foto oder Dokument auswählen</div>
+    <div class="upload-sub">Claude KI erkennt Termine direkt aus dem Bild</div>
+    <div class="badges">
+      <span class="badge">📸 Foto</span>
+      <span class="badge">🖼 Screenshot</span>
+      <span class="badge">📄 PDF</span>
+      <span class="badge free">✅ Kostenlos</span>
+    </div>
+  </div>
+
+  <div style="margin-bottom:16px">
+    <button class="btn btn-g" style="width:100%" onclick="openCamera()">📸 Kamera öffnen</button>
+    <input type="file" accept="image/*" capture="environment" id="cameraInput" style="display:none" onchange="handleFile(event)">
+  </div>
+
+  <div class="preview-section" id="previewSection">
+    <img class="preview-img" id="previewImg" src="" alt="" style="display:none">
+    <div class="pdf-box" id="pdfBox" style="display:none">
+      <div style="font-size:2.5rem;margin-bottom:8px">📄</div>
+      <div id="pdfName" style="font-size:.82rem;word-break:break-all;margin-bottom:4px"></div>
+      <div id="pdfSize" style="font-size:.7rem;color:var(--mu)"></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn btn-g" onclick="resetApp()">✕ Neu</button>
+      <button class="btn btn-p" id="scanBtn" onclick="startScan()" style="flex:1">🔍 Erkennen</button>
+    </div>
+  </div>
+
+  <div class="prog" id="prog">
+    <div class="step" id="step1"><div class="si" id="si1">🤖</div><span>Claude analysiert Bild...</span></div>
+    <div class="step" id="step2"><div class="si" id="si2">🧠</div><span>Termindaten extrahieren</span></div>
+    <div class="step" id="step3"><div class="si" id="si3">📅</div><span>In Kalender eintragen</span></div>
+  </div>
+
+  <div class="alert" id="alertBox"></div>
+
+  <div class="result" id="resultCard">
+    <div class="rtitle">
+      <span id="rtitle">Termin erkannt</span>
+      <span class="conf-badge" id="confBadge"></span>
+    </div>
+    <div class="rfield"><div class="rfi">📌</div><div style="flex:1"><div class="rfl">Titel</div><div class="rfv" contenteditable id="rTitle"></div></div></div>
+    <div class="rfield"><div class="rfi">📅</div><div style="flex:1"><div class="rfl">Datum</div><div class="rfv" contenteditable id="rDate"></div></div></div>
+    <div class="rfield"><div class="rfi">🕐</div><div style="flex:1"><div class="rfl">Uhrzeit</div><div class="rfv" contenteditable id="rTime"></div></div></div>
+    <div class="rfield"><div class="rfi">📍</div><div style="flex:1"><div class="rfl">Ort</div><div class="rfv" contenteditable id="rLocation"></div></div></div>
+    <div class="rfield"><div class="rfi">📝</div><div style="flex:1"><div class="rfl">Notizen</div><div class="rfv" contenteditable id="rNotes"></div></div></div>
+    <div class="hint">✏ Felder antippen zum Bearbeiten</div>
+    <div class="raw-tog" onclick="document.getElementById('rawColl').classList.toggle('on')">
+      🔤 <span>Rohtext anzeigen</span>
+    </div>
+    <div class="coll" id="rawColl"><div class="raw-tx" id="rawTx"></div></div>
+    <div class="dupe" id="dupeBox">
+      <strong style="display:block;margin-bottom:6px">⚠ Möglicher Duplikat!</strong>
+      Ähnlicher Termin gefunden: <span id="dupeName" style="color:var(--wa)"></span>
+      <div class="row" style="margin-top:10px">
+        <button class="btn btn-g" style="font-size:.72rem;padding:8px 12px;flex:none" onclick="addToCalendar(true)">✚ Trotzdem eintragen</button>
+        <a id="dupeLink" href="#" target="_blank" class="btn btn-g" style="font-size:.72rem;padding:8px 12px;flex:none">→ Öffnen</a>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn btn-g" onclick="resetApp()">✕ Neu</button>
+      <button class="btn btn-ok" id="calBtn" onclick="addToCalendar()" style="flex:1">📅 In Kalender</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: GUIDE -->
+<div class="page" id="page-guide">
+  <header style="margin-bottom:16px">
+    <div class="logo">Termin<span>.</span>Scan</div>
+  </header>
+
+  <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:6px">Setup-Anleitung</div>
+  <div style="font-size:.75rem;color:var(--mu);margin-bottom:20px;line-height:1.6">Alles kostenlos – du brauchst nur einen Google-Account.</div>
+
+  <div class="note-box">
+    🤖 <strong>Claude KI</strong> für beste Erkennung (~0,01€/Scan) + <strong>Google Kalender</strong> kostenlos.
+    GitHub Pages für Vollbild-Installation kostenlos.<br>
+    Neuer Anthropic-Account bekommt meist kostenloses Startguthaben.
+  </div>
+
+  <div class="guide-step">
+    <div class="gs-num">1</div>
+    <div class="gs-title">🤖 Claude API Key holen <span style="font-size:.65rem;color:var(--wa)">~0,01€/Scan</span></div>
+    <div class="gs-text">
+      1. Gehe zu <strong>console.anthropic.com</strong><br>
+      2. Links: <strong>„API Keys"</strong> anklicken<br>
+      3. <strong>„Create Key"</strong> → Key kopieren<br>
+      4. Im ⚙ Einstellungen (oben rechts) einfügen<br>
+      5. <strong>Speichern</strong><br><br>
+      💡 Kosten: ca. 0,01–0,02€ pro Scan.<br>
+      Beim ersten Mal gibt es meist ein kostenloses Guthaben.
+    </div>
+    <a class="gs-link" href="https://console.anthropic.com/settings/keys" target="_blank">→ Anthropic Console öffnen</a>
+  </div>
+
+  <div class="guide-step">
+    <div class="gs-num">2</div>
+    <div class="gs-title">📅 Google Kalender einrichten <span style="font-size:.65rem;color:var(--ok)">(kostenlos)</span></div>
+    <div class="gs-text">
+      <strong>Schritt A – Google Cloud Projekt:</strong><br>
+      1. Gehe zu <strong>console.cloud.google.com</strong><br>
+      2. <strong>„Neues Projekt"</strong> erstellen, z.B. <code>TerminScan</code><br><br>
+      <strong>Schritt B – Calendar API aktivieren:</strong><br>
+      1. → <strong>APIs &amp; Dienste → Bibliothek</strong><br>
+      2. Suche <strong>„Google Calendar API"</strong> → Aktivieren<br><br>
+      <strong>Schritt C – OAuth Client erstellen:</strong><br>
+      1. → <strong>APIs &amp; Dienste → Anmeldedaten</strong><br>
+      2. <strong>„Anmeldedaten erstellen"</strong> → <strong>„OAuth 2.0-Client-ID"</strong><br>
+      3. Anwendungstyp: <strong>„Webanwendung"</strong><br>
+      4. Bei <strong>„Autorisierte JavaScript-Quellen"</strong> eintragen:<br>
+      &nbsp;&nbsp;&nbsp;→ <code>https://DEINNAME.github.io</code> (für GitHub Pages)<br>
+      &nbsp;&nbsp;&nbsp;→ <code>http://localhost:8080</code> (für lokalen PC-Test)<br>
+      5. Client-ID kopieren → ins ⚙ Einstellungen einfügen
+    </div>
+    <a class="gs-link" href="https://console.cloud.google.com/apis/credentials" target="_blank">→ Google Cloud öffnen</a>
+  </div>
+
+  <div class="guide-step">
+    <div class="gs-num">3</div>
+    <div class="gs-title">📲 Als App installieren (Vollbild) <span style="font-size:.65rem;color:var(--ok)">(kostenlos)</span></div>
+    <div class="gs-text">
+      <strong>GitHub Pages – einmal einrichten, überall nutzen:</strong><br>
+      1. Konto erstellen auf <strong>github.com</strong><br>
+      2. <strong>„New repository"</strong> → Name: <code>terminscan</code> → Public → Create<br>
+      3. <strong>„uploading an existing file"</strong> → alle Dateien aus dem ZIP hochladen<br>
+      4. → Settings → Pages → Source: <strong>main</strong> → Save<br>
+      5. Deine URL: <code>https://DEINNAME.github.io/terminscan</code><br><br>
+      <strong>App auf Android installieren:</strong><br>
+      → URL in Chrome öffnen → Menü (⋮) → <strong>„Zum Startbildschirm hinzufügen"</strong><br><br>
+      <strong>Lokal am PC testen (ohne GitHub):</strong><br>
+      → ZIP entpacken → im Ordner Terminal öffnen → eingeben:<br>
+      <code>python3 -m http.server 8080</code><br>
+      → Browser: <code>http://localhost:8080</code>
+    </div>
+    <a class="gs-link" href="https://github.com/new" target="_blank">→ GitHub öffnen</a>
+  </div>
+
+  <div class="warn-box">
+    ⚠️ <strong>Wichtig für OAuth:</strong> Die URL die du bei „Autorisierte JavaScript-Quellen" einträgst muss exakt mit der URL übereinstimmen unter der die App läuft – also entweder deine GitHub Pages URL oder <code>http://localhost:8080</code>.
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tabbar">
+  <button class="tab active" id="tab-scan" onclick="showPage('scan')">
+    <span class="tab-icon">📸</span><span>Scanner</span><span class="tab-dot"></span>
+  </button>
+  <button class="tab" id="tab-guide" onclick="showPage('guide')">
+    <span class="tab-icon">📖</span><span>Anleitung</span><span class="tab-dot"></span>
+  </button>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="overlay" id="overlay" onclick="closeSettings()"></div>
+<div class="modal" id="modal">
+  <div class="mhead">
+    <div class="mtitle">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      Einstellungen
+    </div>
+    <button class="mclose" onclick="closeSettings()">✕</button>
+  </div>
+
+  <div class="msep">KI-Erkennung <span style="font-size:.6rem;color:var(--mu)">~0,01€/Scan</span></div>
+  <div class="field">
+    <label>
+      Claude (Anthropic) API Key<br>
+      <a href="https://console.anthropic.com/settings/keys" target="_blank" style="font-size:.63rem">→ console.anthropic.com/settings/keys</a>
+    </label>
+    <div class="pw-wrap">
+      <input type="password" id="geminiKey" placeholder="sk-ant-..." autocomplete="off">
+      <button class="eye" onclick="toggleEye('geminiKey',this)">👁</button>
+    </div>
+    <div class="key-status" id="geminiStatus"></div>
+  </div>
+
+  <div class="msep">Google Kalender <span style="color:var(--ok);font-size:.6rem;margin-left:4px">– kostenlos</span></div>
+  <div class="field">
+    <label>OAuth Client ID<br>
+      <a href="https://console.cloud.google.com/apis/credentials" target="_blank" style="font-size:.63rem">→ console.cloud.google.com</a>
+    </label>
+    <input type="text" id="googleClientId" placeholder="xxxx.apps.googleusercontent.com" autocomplete="off">
+  </div>
+  <button class="btn btn-g" style="width:100%;margin-bottom:4px" id="authBtn" onclick="handleAuth()">
+    🔐 Mit Google anmelden
+  </button>
+  <div style="font-size:.65rem;color:var(--mu);margin-bottom:12px;line-height:1.5">
+    Fragen zur Einrichtung? Siehe <span onclick="closeSettings();showPage('guide')" style="color:var(--ac);cursor:pointer">Anleitung</span>
+  </div>
+
+  <div class="row">
+    <button class="btn btn-g" style="flex:1" onclick="closeSettings()">Abbrechen</button>
+    <button class="btn btn-p" style="flex:1" onclick="saveConfig()">💾 Speichern</button>
+  </div>
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+'use strict';
+
+// Service Worker for PWA install
+if ('serviceWorker' in navigator) {
+  var swCode = "const CACHE='ts3';\nself.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./index.html','./manifest.json'])));self.skipWaiting();});\nself.addEventListener('activate',e=>{e.waitUntil(clients.claim());});\nself.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./index.html'))));});";
+  var swBlob = new Blob([swCode], {type:'text/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(swBlob), {scope:'./'})
+    .catch(function(e){ console.warn('SW:', e.message); });
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+var currentFile = null, tokenClient = null, accessToken = null;
+
+// ── Storage ───────────────────────────────────────────────────────────────────
+function ls(k)  { try{ return localStorage.getItem(k);  }catch(e){ return null; } }
+function lss(k,v){ try{ localStorage.setItem(k,v);       }catch(e){} }
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── Settings Modal ────────────────────────────────────────────────────────────
+function openSettings() {
+  loadConfig();
+  document.getElementById('overlay').classList.add('on');
+  var m = document.getElementById('modal');
+  m.classList.add('on');
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ m.classList.add('open'); });
+  });
+}
+function closeSettings() {
+  var m = document.getElementById('modal');
+  m.classList.remove('open');
+  document.getElementById('overlay').classList.remove('on');
+  setTimeout(function(){ m.classList.remove('on'); }, 260);
+}
+function toggleEye(id, btn) {
+  var inp = document.getElementById(id);
+  inp.type = inp.type==='password' ? 'text' : 'password';
+  btn.textContent = inp.type==='password' ? '👁' : '🙈';
+}
+
+// ── Config ────────────────────────────────────────────────────────────────────
+function loadConfig() {
+  document.getElementById('geminiKey').value      = ls('gk')  || '';
+  document.getElementById('googleClientId').value = ls('gci') || '';
+  updateGeminiStatus();
+}
+function saveConfig() {
+  lss('ak',  document.getElementById('geminiKey').value.trim());
+  lss('gci', document.getElementById('googleClientId').value.trim());
+  closeSettings();
+  showAlert('✓ Einstellungen gespeichert!', 'ok', 2200);
+  setTimeout(initGoogleAuth, 400);
+}
+function updateGeminiStatus() {
+  var k = ls('gk');
+  var el = document.getElementById('geminiStatus');
+  if (!el) return;
+  if (k && k.length > 10) {
+    el.textContent = '✓ Key gespeichert';
+    el.className = 'key-status ok';
+  } else {
+    el.textContent = 'Kein Key – bitte eintragen';
+    el.className = 'key-status er';
+  }
+}
+
+// ── Google Auth ───────────────────────────────────────────────────────────────
+function initGoogleAuth() {
+  var cid = ls('gci');
+  if (!cid || !window.google) return;
+  try {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: cid,
+      scope: 'https://www.googleapis.com/auth/calendar.events',
+      callback: function(r) {
+        if (r.error) { showAlert('Google Fehler: ' + r.error, 'er'); return; }
+        accessToken = r.access_token;
+        document.getElementById('authStatus').textContent = 'Kalender ✓';
+        document.getElementById('authStatus').classList.add('on');
+        document.getElementById('authBtn').textContent = '✓ Verbunden';
+        document.getElementById('authBtn').disabled = true;
+      }
+    });
+  } catch(e) { console.warn('Auth init:', e); }
+}
+function handleAuth() {
+  if (!ls('gci')) {
+    closeSettings();
+    showPage('guide');
+    showAlert('Bitte zuerst Schritt 2 der Anleitung befolgen.', 'er');
+    return;
+  }
+  if (!tokenClient) initGoogleAuth();
+  if (tokenClient) tokenClient.requestAccessToken();
+  else showAlert('Google SDK nicht geladen. Seite neu laden.', 'er');
+}
+
+// ── File Handling ─────────────────────────────────────────────────────────────
+function openCamera() { document.getElementById('cameraInput').click(); }
+
+function handleFile(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  currentFile = file;
+  var isPDF = file.type === 'application/pdf';
+  document.getElementById('uploadZone').style.display = 'none';
+  document.getElementById('previewSection').classList.add('on');
+  document.getElementById('resultCard').classList.remove('on');
+  document.getElementById('prog').classList.remove('on');
+  document.getElementById('dupeBox').style.display = 'none';
+  hideAlert();
+  if (isPDF) {
+    document.getElementById('previewImg').style.display = 'none';
+    document.getElementById('pdfBox').style.display = 'block';
+    document.getElementById('pdfName').textContent = file.name;
+    document.getElementById('pdfSize').textContent = (file.size/1024).toFixed(0) + ' KB';
+  } else {
+    document.getElementById('pdfBox').style.display = 'none';
+    document.getElementById('previewImg').style.display = 'block';
+    document.getElementById('previewImg').src = URL.createObjectURL(file);
+  }
+}
+
+var uz = document.getElementById('uploadZone');
+uz.addEventListener('dragover', function(e) { e.preventDefault(); uz.classList.add('drag'); });
+uz.addEventListener('dragleave', function() { uz.classList.remove('drag'); });
+uz.addEventListener('drop', function(e) {
+  e.preventDefault(); uz.classList.remove('drag');
+  var f = e.dataTransfer.files[0];
+  if (f) handleFile({target:{files:[f]}});
+});
+
+// ── Gemini API Call ───────────────────────────────────────────────────────────
+async function callClaude(file, apiKey) {
+  var b64 = await toBase64(file);
+  var isPDF = file.type === 'application/pdf';
+  var today = new Date().toLocaleDateString('de-DE', {
+    weekday:'long', year:'numeric', month:'long', day:'numeric'
+  });
+
+  var mediaPart = isPDF
+    ? { type:'document', source:{ type:'base64', media_type:'application/pdf', data:b64 } }
+    : { type:'image',    source:{ type:'base64', media_type:file.type,          data:b64 } };
+
+  var prompt = 'Heute ist ' + today + '.\n\n' +
+    'Analysiere dieses Dokument/Bild und extrahiere alle Termindaten.\n' +
+    'Antworte AUSSCHLIESSLICH mit einem JSON-Objekt, kein Text davor oder danach:\n' +
+    '{"title":"Titel des Termins","date":"YYYY-MM-DD","startTime":"HH:MM oder null","endTime":"HH:MM oder null","location":"Ort oder null","notes":"Zusatzinfos oder null","confidence":0}\n\n' +
+    'Regeln:\n' +
+    '- date: immer YYYY-MM-DD Format\n' +
+    '- Felder die nicht erkennbar sind: null\n' +
+    '- confidence: 0-100, wie sicher du bist\n' +
+    '- Wenn mehrere Termine: nimm den ersten';
+
+  var resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-opus-4-5',
+      max_tokens: 512,
+      system: 'Du extrahierst Termindaten aus Bildern. Antworte NUR mit JSON, ohne Markdown oder sonstigen Text.',
+      messages: [{ role:'user', content:[ mediaPart, { type:'text', text:prompt } ] }]
+    })
+  });
+
+  if (!resp.ok) {
+    var err = await resp.json();
+    var msg = err.error?.message || 'HTTP ' + resp.status;
+    if (resp.status === 401) throw new Error('Ungültiger API Key – bitte prüfen');
+    if (resp.status === 429) throw new Error('Zu viele Anfragen – kurz warten');
+    throw new Error('Claude Fehler: ' + msg);
+  }
+
+  var data = await resp.json();
+  var text = (data.content?.[0]?.text || '').trim()
+    .replace(/^```json\s*/, '').replace(/```\s*$/, '').trim();
+
+  try { return JSON.parse(text); }
+  catch(e) {
+    var m = text.match(/\{[\s\S]*\}/);
+    if (m) return JSON.parse(m[0]);
+    throw new Error('Antwort konnte nicht verarbeitet werden');
+  }
+}
+
+
+// ── Scan ──────────────────────────────────────────────────────────────────────
+async function startScan() {
+  if (!currentFile) return;
+  var apiKey = ls('ak');
+  if (!apiKey) {
+    openSettings();
+    showAlert('Bitte zuerst einen Gemini API Key eintragen.', 'er');
+    return;
+  }
+  var btn = document.getElementById('scanBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin">⟳</span> Analysiere...';
+  document.getElementById('prog').classList.add('on');
+  document.getElementById('resultCard').classList.remove('on');
+  document.getElementById('dupeBox').style.display = 'none';
+  hideAlert();
+
+  try {
+    setStep(1, 'active');
+    setStep(2, '');
+    setStep(3, '');
+
+    var data = await callClaude(currentFile, apiKey);
+    setStep(1, 'done');
+    setStep(2, 'active');
+
+    // Small delay so user sees step 2
+    await new Promise(function(r){ setTimeout(r, 400); });
+    setStep(2, 'done');
+
+    document.getElementById('prog').classList.remove('on');
+    showResult(data);
+    document.getElementById('resultCard').classList.add('on');
+
+    if ((data.confidence || 0) < 50) {
+      showAlert('⚠ Geringe Erkennungssicherheit – bitte Felder prüfen.', 'er');
+    }
+  } catch(err) {
+    setStep(1, '');
+    document.getElementById('prog').classList.remove('on');
+    var msg = err.message || 'Unbekannter Fehler';
+    if (msg.includes('Key') || msg.includes('403')) {
+      showAlert(msg + ' → Bitte Key im ⚙ Einstellungen prüfen.', 'er');
+    } else {
+      showAlert('Fehler: ' + msg, 'er');
+    }
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '🔍 Erkennen';
+}
+
+// ── Duplicate Check ───────────────────────────────────────────────────────────
+function sim(a, b) {
+  if (!a || !b) return 0;
+  var wa = new Set(a.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean));
+  var wb = new Set(b.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean));
+  var n = 0; wa.forEach(function(w){ if(wb.has(w)) n++; });
+  return n / Math.max(wa.size, wb.size, 1);
+}
+async function checkDupes(title, date) {
+  var d = new Date(date), from = new Date(d), to = new Date(d);
+  from.setDate(from.getDate() - 1); to.setDate(to.getDate() + 2);
+  var r = await fetch(
+    'https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=' + from.toISOString() +
+    '&timeMax=' + to.toISOString() + '&singleEvents=true&maxResults=50',
+    { headers: {'Authorization': 'Bearer ' + accessToken} }
+  );
+  if (!r.ok) return [];
+  var d2 = await r.json();
+  return (d2.items || []).filter(function(ev) {
+    var ed = (ev.start?.date || ev.start?.dateTime || '').slice(0,10);
+    return ed === date && sim(ev.summary, title) >= 0.5;
+  });
+}
+
+// ── Calendar ──────────────────────────────────────────────────────────────────
+async function addToCalendar(force) {
+  if (!accessToken) {
+    showAlert('Bitte zuerst mit Google anmelden (⚙ Einstellungen).', 'er');
+    return;
+  }
+  var btn = document.getElementById('calBtn');
+  btn.disabled = true;
+  document.getElementById('dupeBox').style.display = 'none';
+
+  var title    = document.getElementById('rTitle').textContent.trim();
+  var date     = document.getElementById('rDate').textContent.trim();
+  var time     = document.getElementById('rTime').textContent.trim();
+  var location = document.getElementById('rLocation').textContent.trim();
+  var notes    = document.getElementById('rNotes').textContent.trim();
+
+  // Duplicate check
+  if (!force && date && date !== '–') {
+    btn.innerHTML = '<span class="spin">⟳</span> Prüfe...';
+    try {
+      var dupes = await checkDupes(title, date);
+      if (dupes.length > 0) {
+        document.getElementById('dupeName').textContent = dupes.map(function(e){ return '"'+e.summary+'"'; }).join(', ');
+        var dl = document.getElementById('dupeLink');
+        var lnk = dupes[0]?.htmlLink || '';
+        dl.href = lnk; dl.style.display = lnk ? 'flex' : 'none';
+        document.getElementById('dupeBox').style.display = 'block';
+        btn.disabled = false; btn.innerHTML = '📅 In Kalender';
+        return;
+      }
+    } catch(e) {}
+  }
+
+  btn.innerHTML = '<span class="spin">⟳</span> Eintragen...';
+  var ev = {
+    summary: title || 'Termin',
+    location: (location && location !== '–') ? location : undefined,
+    description: (notes && notes !== '–') ? notes : undefined
+  };
+
+  if (time && time !== '–' && /\d{1,2}:\d{2}/.test(time)) {
+    var p = time.split(':'), h = p[0], m = p[1] || '00';
+    ev.start = { dateTime: date+'T'+h.padStart(2,'0')+':'+m.padStart(2,'0')+':00', timeZone: 'Europe/Berlin' };
+    var endH = document.getElementById('rNotes').dataset.endTime;
+    if (endH && /\d{1,2}:\d{2}/.test(endH)) {
+      var ep = endH.split(':');
+      ev.end = { dateTime: date+'T'+ep[0].padStart(2,'0')+':'+ep[1].padStart(2,'0')+':00', timeZone: 'Europe/Berlin' };
+    } else {
+      ev.end = { dateTime: date+'T'+String(parseInt(h)+1).padStart(2,'0')+':'+m.padStart(2,'0')+':00', timeZone: 'Europe/Berlin' };
+    }
+  } else {
+    ev.start = {date: date}; ev.end = {date: date};
+  }
+
+  try {
+    var r = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+      method: 'POST',
+      headers: {'Authorization': 'Bearer '+accessToken, 'Content-Type': 'application/json'},
+      body: JSON.stringify(ev)
+    });
+    if (!r.ok) { var e2 = await r.json(); throw new Error(e2.error?.message); }
+    var cr = await r.json();
+    setStep(3, 'done');
+    showAlert('✓ "' + title + '" wurde eingetragen!', 'ok');
+    if (cr.htmlLink) {
+      document.getElementById('alertBox').innerHTML +=
+        ' <a href="' + cr.htmlLink + '" target="_blank">→ Öffnen</a>';
+    }
+  } catch(err) {
+    showAlert('Kalender-Fehler: ' + err.message, 'er');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '📅 In Kalender';
+}
+
+// ── UI Helpers ────────────────────────────────────────────────────────────────
+function showResult(d) {
+  document.getElementById('rTitle').textContent    = d.title     || '–';
+  document.getElementById('rDate').textContent     = d.date      || '–';
+  document.getElementById('rTime').textContent     = d.startTime || '–';
+  document.getElementById('rLocation').textContent = d.location  || '–';
+  document.getElementById('rNotes').textContent    = d.notes     || '–';
+  // Store endTime for calendar
+  document.getElementById('rNotes').dataset.endTime = d.endTime || '';
+  // Show raw prompt result
+  document.getElementById('rawTx').textContent = JSON.stringify(d, null, 2);
+
+  var c = d.confidence || 0;
+  var col = c >= 80 ? 'var(--ok)' : c >= 50 ? 'var(--wa)' : 'var(--er)';
+  var badge = document.getElementById('confBadge');
+  badge.textContent = c + '% sicher';
+  badge.style.cssText = 'background:' + (c>=80?'rgba(107,255,184,.1)':c>=50?'rgba(255,204,107,.1)':'rgba(255,107,107,.1)') +
+    ';border:1px solid '+col+';color:'+col+';font-size:.65rem;padding:3px 10px;border-radius:100px';
+}
+
+function setStep(n, state) {
+  var el = document.getElementById('step'+n), si = document.getElementById('si'+n);
+  el.classList.remove('active','done');
+  var ic = {1:'🤖', 2:'🧠', 3:'📅'};
+  if (state === 'active') { el.classList.add('active'); si.innerHTML = '<span class="spin">⟳</span>'; }
+  else if (state === 'done') { el.classList.add('done'); si.textContent = '✓'; }
+  else { si.textContent = ic[n] || ''; }
+}
+
+function showAlert(msg, type, ms) {
+  var el = document.getElementById('alertBox');
+  el.innerHTML = msg;
+  el.className = 'alert on ' + type;
+  if (ms) setTimeout(function(){ el.classList.remove('on'); }, ms);
+}
+function hideAlert() { document.getElementById('alertBox').classList.remove('on'); }
+
+function resetApp() {
+  currentFile = null;
+  try { document.getElementById('fileInput').value = ''; } catch(e) {}
+  try { document.getElementById('cameraInput').value = ''; } catch(e) {}
+  document.getElementById('uploadZone').style.display = '';
+  document.getElementById('previewSection').classList.remove('on');
+  document.getElementById('previewImg').style.display = 'none';
+  document.getElementById('pdfBox').style.display = 'none';
+  document.getElementById('resultCard').classList.remove('on');
+  document.getElementById('prog').classList.remove('on');
+  document.getElementById('dupeBox').style.display = 'none';
+  document.getElementById('rawColl').classList.remove('on');
+  document.getElementById('scanBtn').disabled = false;
+  document.getElementById('scanBtn').innerHTML = '🔍 Erkennen';
+  hideAlert();
+  [1,2,3].forEach(function(n){ setStep(n,''); });
+}
+
+async function toBase64(file) {
+  return new Promise(function(res, rej) {
+    var r = new FileReader();
+    r.onload = function() { res(r.result.split(',')[1]); };
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+window.addEventListener('load', function() {
+  loadConfig();
+  if (ls('gci')) setTimeout(initGoogleAuth, 1500);
+  if (!ls('ak')) setTimeout(function() {
+    openSettings();
+  }, 800);
+});
+</script>
+</body>
+</html>
