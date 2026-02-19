@@ -482,7 +482,7 @@ function toggleEye(id, btn) {
 
 // ── Config ────────────────────────────────────────────────────────────────────
 function loadConfig() {
-  document.getElementById('geminiKey').value      = ls('gk')  || '';
+  document.getElementById('geminiKey').value      = ls('ak')  || '';
   document.getElementById('googleClientId').value = ls('gci') || '';
   updateGeminiStatus();
 }
@@ -494,7 +494,7 @@ function saveConfig() {
   setTimeout(initGoogleAuth, 400);
 }
 function updateGeminiStatus() {
-  var k = ls('gk');
+  var k = ls('ak');
   var el = document.getElementById('geminiStatus');
   if (!el) return;
   if (k && k.length > 10) {
