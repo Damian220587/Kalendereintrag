@@ -243,6 +243,11 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
       <span id="rtitle">Termin erkannt</span>
       <span class="conf-badge" id="confBadge"></span>
     </div>
+    <div id="multiNav" style="display:none;align-items:center;justify-content:space-between;margin-bottom:14px;background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;">
+      <button class="btn btn-g" id="prevBtn" onclick="navResult(-1)" style="padding:6px 14px;font-size:.75rem;">← Zurück</button>
+      <span id="multiInfo" style="font-size:.75rem;color:var(--mu)"></span>
+      <button class="btn btn-g" id="nextBtn" onclick="navResult(1)" style="padding:6px 14px;font-size:.75rem;">Weiter →</button>
+    </div>
     <div class="rfield"><div class="rfi">📌</div><div style="flex:1"><div class="rfl">Titel</div><div class="rfv" contenteditable id="rTitle"></div></div></div>
     <div class="rfield"><div class="rfi">📅</div><div style="flex:1"><div class="rfl">Datum</div><div class="rfv" contenteditable id="rDate"></div></div></div>
     <div class="rfield"><div class="rfi">🕐</div><div style="flex:1"><div class="rfl">Uhrzeit</div><div class="rfv" contenteditable id="rTime"></div></div></div>
@@ -594,10 +599,14 @@ async function callClaude(file, apiKey) {
   var text = (data.content?.[0]?.text || '').trim()
     .replace(/^```json\s*/, '').replace(/```\s*$/, '').trim();
 
-  try { return JSON.parse(text); }
-  catch(e) {
-    var m = text.match(/\{[\s\S]*\}/);
-    if (m) return JSON.parse(m[0]);
+  try {
+    var parsed = JSON.parse(text);
+    return Array.isArray(parsed) ? parsed : [parsed];
+  } catch(e) {
+    var ma = text.match(/\[[\s\S]*\]/);
+    if (ma) { var arr = JSON.parse(ma[0]); return Array.isArray(arr) ? arr : [arr]; }
+    var mo = text.match(/\{[\s\S]*\}/);
+    if (mo) return [JSON.parse(mo[0])];
     throw new Error('Antwort konnte nicht verarbeitet werden');
   }
 }
@@ -625,19 +634,22 @@ async function startScan() {
     setStep(2, '');
     setStep(3, '');
 
-    var data = await callClaude(currentFile, apiKey);
+    var results = await callClaude(currentFile, apiKey);
     setStep(1, 'done');
     setStep(2, 'active');
 
-    // Small delay so user sees step 2
     await new Promise(function(r){ setTimeout(r, 400); });
     setStep(2, 'done');
 
     document.getElementById('prog').classList.remove('on');
-    showResult(data);
+
+    // Store all results globally
+    window.scanResults = results;
+    window.scanIndex = 0;
+    showResult(results[0], 0, results.length);
     document.getElementById('resultCard').classList.add('on');
 
-    if ((data.confidence || 0) < 50) {
+    if ((results[0].confidence || 0) < 50) {
       showAlert('⚠ Geringe Erkennungssicherheit – bitte Felder prüfen.', 'er');
     }
   } catch(err) {
@@ -755,15 +767,23 @@ async function addToCalendar(force) {
 }
 
 // ── UI Helpers ────────────────────────────────────────────────────────────────
-function showResult(d) {
+function navResult(dir) {
+  var results = window.scanResults || [];
+  var idx = (window.scanIndex || 0) + dir;
+  if (idx < 0 || idx >= results.length) return;
+  window.scanIndex = idx;
+  document.getElementById('dupeBox').style.display = 'none';
+  hideAlert();
+  showResult(results[idx], idx, results.length);
+}
+
+function showResult(d, idx, total) {
   document.getElementById('rTitle').textContent    = d.title     || '–';
   document.getElementById('rDate').textContent     = d.date      || '–';
   document.getElementById('rTime').textContent     = d.startTime || '–';
   document.getElementById('rLocation').textContent = d.location  || '–';
   document.getElementById('rNotes').textContent    = d.notes     || '–';
-  // Store endTime for calendar
   document.getElementById('rNotes').dataset.endTime = d.endTime || '';
-  // Show raw prompt result
   document.getElementById('rawTx').textContent = JSON.stringify(d, null, 2);
 
   var c = d.confidence || 0;
@@ -772,6 +792,17 @@ function showResult(d) {
   badge.textContent = c + '% sicher';
   badge.style.cssText = 'background:' + (c>=80?'rgba(107,255,184,.1)':c>=50?'rgba(255,204,107,.1)':'rgba(255,107,107,.1)') +
     ';border:1px solid '+col+';color:'+col+';font-size:.65rem;padding:3px 10px;border-radius:100px';
+
+  // Show nav if multiple results
+  var nav = document.getElementById('multiNav');
+  if (total && total > 1) {
+    nav.style.display = 'flex';
+    document.getElementById('multiInfo').textContent = 'Termin ' + (idx+1) + ' von ' + total;
+    document.getElementById('prevBtn').disabled = idx === 0;
+    document.getElementById('nextBtn').disabled = idx === total-1;
+  } else {
+    nav.style.display = 'none';
+  }
 }
 
 function setStep(n, state) {
