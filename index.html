@@ -753,7 +753,16 @@ async function addToCalendar(force) {
   var ev = {
     summary: title || 'Termin',
     location: (location && location !== '–') ? location : undefined,
-    description: (notes && notes !== '–') ? notes : undefined
+    description: (notes && notes !== '–') ? notes : undefined,
+    reminders: {
+      useDefault: false,
+      overrides: [
+        { method: 'popup', minutes: 3 * 24 * 60 },
+        { method: 'popup', minutes: 2 * 24 * 60 },
+        { method: 'popup', minutes: 1 * 24 * 60 },
+        { method: 'popup', minutes: 120 }
+      ]
+    }
   };
 
   if (time && time !== '–' && /\d{1,2}:\d{2}/.test(time)) {
