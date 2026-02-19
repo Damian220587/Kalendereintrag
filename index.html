@@ -585,14 +585,16 @@ async function callClaude(file, apiKey) {
     : { type:'image',    source:{ type:'base64', media_type:file.type,          data:b64 } };
 
   var prompt = 'Heute ist ' + today + '.\n\n' +
-    'Analysiere dieses Dokument/Bild und extrahiere alle Termindaten.\n' +
-    'Antworte AUSSCHLIESSLICH mit einem JSON-Objekt, kein Text davor oder danach:\n' +
-    '{"title":"Titel des Termins","date":"YYYY-MM-DD","startTime":"HH:MM oder null","endTime":"HH:MM oder null","location":"Ort oder null","notes":"Zusatzinfos oder null","confidence":0}\n\n' +
+    'Analysiere dieses Dokument/Bild und extrahiere ALLE Termine die du findest.\n' +
+    'Antworte AUSSCHLIESSLICH mit einem JSON-Array, kein Text davor oder danach.\n' +
+    'Auch wenn es nur einen Termin gibt, antworte mit einem Array:\n' +
+    '[{"title":"Titel","date":"YYYY-MM-DD","startTime":"HH:MM oder null","endTime":"HH:MM oder null","location":"Ort oder null","notes":"Zusatzinfos oder null","confidence":0}]\n\n' +
     'Regeln:\n' +
+    '- Jeden Termin als eigenes Objekt im Array\n' +
     '- date: immer YYYY-MM-DD Format\n' +
     '- Felder die nicht erkennbar sind: null\n' +
-    '- confidence: 0-100, wie sicher du bist\n' +
-    '- Wenn mehrere Termine: nimm den ersten';
+    '- confidence: 0-100 pro Termin\n' +
+    '- NIEMALS mehrere Termine in einem Objekt zusammenfassen';
 
   var resp = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
