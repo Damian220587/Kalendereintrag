@@ -413,7 +413,30 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 
 // Service Worker for PWA install
 if ('serviceWorker' in navigator) {
-  var swCode = "const CACHE='ts3';\nself.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./index.html','./manifest.json'])));self.skipWaiting();});\nself.addEventListener('activate',e=>{e.waitUntil(clients.claim());});\nself.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('./index.html'))));});";
+  var swCode = `const CACHE='ts4';
+const FILES=['./','./index.html','./manifest.json'];
+self.addEventListener('install',e=>{
+  e.waitUntil(caches.open(CACHE).then(c=>{
+    return Promise.allSettled(FILES.map(f=>c.add(f).catch(()=>{})));
+  }));
+  self.skipWaiting();
+});
+self.addEventListener('activate',e=>{
+  e.waitUntil(caches.keys().then(keys=>Promise.all(
+    keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))
+  )));
+  clients.claim();
+});
+self.addEventListener('fetch',e=>{
+  if(e.request.method!=='GET')return;
+  e.respondWith(
+    fetch(e.request).then(r=>{
+      var rc=r.clone();
+      caches.open(CACHE).then(c=>c.put(e.request,rc));
+      return r;
+    }).catch(()=>caches.match(e.request).then(r=>r||caches.match('./index.html')))
+  );
+});`;
   var swBlob = new Blob([swCode], {type:'text/javascript'});
   navigator.serviceWorker.register(URL.createObjectURL(swBlob), {scope:'./'})
     .catch(function(e){ console.warn('SW:', e.message); });
@@ -850,12 +873,51 @@ async function toBase64(file) {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
+function setAuthUI(on) {
+  document.getElementById('authStatus').textContent = on ? 'Kalender ✓' : 'Kalender';
+  if (on) document.getElementById('authStatus').classList.add('on');
+  else document.getElementById('authStatus').classList.remove('on');
+  document.getElementById('authBtn').textContent = on ? '✓ Verbunden' : 'Google Kalender verbinden';
+  document.getElementById('authBtn').disabled = on;
+}
+
+function scheduleTokenRefresh(expiresIn) {
+  if (tokenRefreshTimer) clearTimeout(tokenRefreshTimer);
+  // Refresh 5 minutes before expiry
+  var delay = Math.max((expiresIn - 300) * 1000, 10000);
+  tokenRefreshTimer = setTimeout(function() {
+    silentRefresh();
+  }, delay);
+}
+
+function silentRefresh() {
+  if (!window.tokenClient) return;
+  try {
+    window.tokenClient.requestAccessToken({ prompt: '' });
+  } catch(e) {
+    console.warn('Silent refresh failed:', e);
+    // Try again in 10 minutes
+    tokenRefreshTimer = setTimeout(silentRefresh, 600000);
+  }
+}
+
 window.addEventListener('load', function() {
   loadConfig();
   if (ls('gci')) setTimeout(initGoogleAuth, 1500);
   if (!ls('ak')) setTimeout(function() {
     openSettings();
   }, 800);
+
+  // Restore Google token if still valid
+  var savedToken = ls('gat');
+  var savedExpiry = parseInt(ls('gat_exp') || '0');
+  var remaining = savedExpiry - Date.now();
+  if (savedToken && remaining > 60000) {
+    accessToken = savedToken;
+    setAuthUI(true);
+    // Schedule refresh based on remaining time
+    scheduleTokenRefresh(remaining / 1000);
+  }
 });
 </script>
 </body>
